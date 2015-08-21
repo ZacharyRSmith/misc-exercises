@@ -1,0 +1,4 @@
+Common common common heh heh oh oh blah
+I I I I I I <- should be filtered out
+Fo0 Fo0 Fo0 Fo0 Fo0 Fo0 <- should not count due to "0"
+HEH HEH
