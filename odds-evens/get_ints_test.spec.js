@@ -12,7 +12,6 @@ describe('getInts', function () {
 				expected.odds[i] = true;
 		}
 
-		// 'test_input.txt' has 2 copies of each int 1 - 100, inclusive.
-		expect(getInts('test_input.txt')).toEqual(expected);
+		expect(getInts('./test_input.txt')).toEqual(expected);
 	});
 });

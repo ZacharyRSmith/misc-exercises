@@ -1,10 +1,8 @@
-module.exports = function deepCopy(arg) {
+function deepCopy (arg) {
   var copy, props;
 
   if (arg instanceof Object) {
-    copy = new arg.constructor(); // This would return exactly what is expected?
-//     copy = Object.create(Object.getPrototypeOf(arg), arg);
-
+    copy = new arg.constructor();
     props = Object.getOwnPropertyNames(arg);
 
     props.forEach(function (prop) {
@@ -13,5 +11,8 @@ module.exports = function deepCopy(arg) {
 
     return copy;
   }
-  else { return arg; }
+  else
+		return arg;
 };
+
+module.exports.deepCopy = deepCopy;

@@ -1,25 +1,27 @@
-var scratch = require('./deep-copy');
+var deepCopyFxn = require('../deep_copy').deepCopy;
 
-describe('Scratch', function () {
 
+// These tests are as much an exploration of JS's equality/comparisons
+// as it is a test of deepCopyFxn().
+describe('deepCopyFxn()', function () {
   it("returns strings", function () {
-    expect(scratch('foo')).toEqual('foo');
+    expect(deepCopyFxn('foo')).toEqual('foo');
   });
 
   it("returns integers", function () {
-    expect(scratch(123)).toEqual(123);
+    expect(deepCopyFxn(123)).toEqual(123);
   });
 
   it("returns copies of simple arrays", function () {
     var simpleAry = [123, 'foo'];
 
-    var deepCopy = scratch(simpleAry);
+    var deepCopy = deepCopyFxn(simpleAry);
     expect(deepCopy[0]).toEqual(simpleAry[0]);
     expect(deepCopy[1]).toEqual(simpleAry[1]);
     expect(deepCopy === simpleAry).toEqual(false);
     expect(deepCopy !== simpleAry).toEqual(true);
 
-    // The below 3 lines are to compare/contrast 'deepCopy()':
+    // The below 3 lines are to compare/contrast 'deepCopyFxn()':
     var refCopy = simpleAry;
     expect(refCopy === simpleAry).toEqual(true);
     expect(refCopy !== simpleAry).toEqual(false);
@@ -28,7 +30,7 @@ describe('Scratch', function () {
   it("returns copies of simple objects", function () {
     var simpleObj = { 'foo': 'bar', 1: 123 };
 
-    var deepCopy = scratch(simpleObj);
+    var deepCopy = deepCopyFxn(simpleObj);
     expect(deepCopy.constructor).toEqual(simpleObj.constructor);
     expect(deepCopy.foo).toEqual(simpleObj.foo);
     expect(deepCopy[1]).toEqual(simpleObj[1]);
@@ -46,7 +48,7 @@ describe('Scratch', function () {
     var obj = { here: { is: str },
                 array: ['ok?', 123, simpleObj] };
 
-    var deepCopy = scratch(obj);
+    var deepCopy = deepCopyFxn(obj);
     expect(deepCopy === obj).toEqual(false);
     expect(deepCopy !== obj).toEqual(true);
 
@@ -61,7 +63,7 @@ describe('Scratch', function () {
       'grade6': ["Kareem"]
     };
 
-    var deepCopy = scratch(obj);
+    var deepCopy = deepCopyFxn(obj);
     var refCopy = obj;
 
     expect(deepCopy).toEqual(obj);
@@ -76,14 +78,12 @@ describe('Scratch', function () {
   it("returns an Array as an Array instead of an Object", function () {
     var ary = ['A', 'B', 'C'],
         obj = { 0: 'A', 1: 'B', 2: 'C' };
-    var copyAry = scratch(ary),
-        copyObj = scratch(obj);
+    var copyAry = deepCopyFxn(ary),
+        copyObj = deepCopyFxn(obj);
 
-    // 'copyAry' is not _actually_ an Array:
-    expect(Array.isArray(copyAry)).toBe(false);
+    expect(Array.isArray(copyAry)).toBe(true);
     expect(Array.isArray(copyObj)).toBe(false);
 
-    // ...but it looks and acts like one:
     expect(copyAry.constructor).not.toBe(Object);
     expect(copyAry.constructor).toBe(Array);
     expect(copyObj.constructor).not.toBe(Array);
