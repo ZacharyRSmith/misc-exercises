@@ -45,7 +45,9 @@ describe('mdParserReverse', function () {
                      '<h5>Chunk starting with five hashtags.</h5>\n');
     fs.writeFileSync('tests_reverse/hashtags_expected.md',
                      '# Chunk starting with one hashtag.\n' +
+                     '\n' +
                      '### Chunk starting with three hashtags.\n' +
+                     '\n' +
                      '##### Chunk starting with five hashtags.\n');
     mdParserReverse('tests_reverse/hashtags.html', 'tests_reverse/hashtags.md');
     var actual = fs.readFileSync('tests_reverse/hashtags.md', 'utf8'),
@@ -56,6 +58,36 @@ describe('mdParserReverse', function () {
     fs.unlink('tests_reverse/hashtags_expected.md');
     fs.unlink('tests_reverse/hashtags.md');
   });
+
+  it("should parse 'em' tags as '*'", function () {
+    fs.writeFileSync('tests_reverse/em.html',
+       '<h1><em>This header should be enclosed in an <code>&lt;em&gt;</code> tag.</em></h1>\n' +
+       '<p>This paragraph should have the following text enclosed in an <code>&lt;em&gt;</code> tag:\n' +
+       '<em>I am the enclosed text, yay!</em></p>\n' +
+       '<p>And <em>this is a chunk</em> with two <code>&lt;em&gt;</code> tags! <em>: D</em></p>\n');
+    fs.writeFileSync('tests_reverse/em_expected.md',
+       '# *This header should be enclosed in an `<em>` tag.*\n' +
+       '\n' +
+       'This paragraph should have the following text enclosed in an `<em>` tag:\n' +
+       '*I am the enclosed text, yay!*\n' +
+       '\n' +
+       'And *this is a chunk* with two `<em>` tags! *: D*\n');
+    mdParserReverse('tests_reverse/em.html', 'tests_reverse/em.md');
+    var actual = fs.readFileSync('tests_reverse/em.md', 'utf8'),
+        expected = fs.readFileSync('tests_reverse/em_expected.md', 'utf8');
+    expect(actual).toEqual(expected);
+
+    fs.unlink('tests_reverse/em.html');
+    fs.unlink('tests_reverse/em_expected.md');
+    fs.unlink('tests_reverse/em.md');
+  });
+
+  // it("should parse '*' as '<em>' tags", function () {
+  //   mdParser('tests/em.md', 'tests/em.html');
+  //   var actual = fs.readFileSync('tests/em.html', 'utf8'),
+  //       expected = fs.readFileSync('tests/em_expected.html', 'utf8');
+  //   expect(actual).toEqual(expected);
+  // });
 
   //   it("should parse a chunk starting with #, ##... as a <h1>, <h2>...chunk", function () {
   //   mdParser('tests/hashtags.md', 'tests/hashtags.html');

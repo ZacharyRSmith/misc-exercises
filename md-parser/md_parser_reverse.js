@@ -8,19 +8,28 @@ function mdParserReverse (inputFilename, outputFilename) {
   input = input.split('<p>').join('');
   input = input.split('</p>').join('\n');
 
-  input = input.replace('<h1>', '# ');
-  input = input.replace('<h2>', '## ');
-  input = input.replace('<h3>', '### ');
-  input = input.replace('<h4>', '#### ');
-  input = input.replace('<h5>', '##### ');
-  input = input.replace('<h6>', '###### ');
+  input = input.replace(/<h1>/g, '# ');
+  input = input.replace(/<h2>/g, '## ');
+  input = input.replace(/<h3>/g, '### ');
+  input = input.replace(/<h4>/g, '#### ');
+  input = input.replace(/<h5>/g, '##### ');
+  input = input.replace(/<h6>/g, '###### ');
 
-  input = input.replace('</h1>', '');
-  input = input.replace('</h2>', '');
-  input = input.replace('</h3>', '');
-  input = input.replace('</h4>', '');
-  input = input.replace('</h5>', '');
-  input = input.replace('</h6>', '');
+  input = input.replace(/<\/h1>/g, '\n');
+  input = input.replace(/<\/h2>/g, '\n');
+  input = input.replace(/<\/h3>/g, '\n');
+  input = input.replace(/<\/h4>/g, '\n');
+  input = input.replace(/<\/h5>/g, '\n');
+  input = input.replace(/<\/h6>/g, '\n');
+
+  input = input.replace(/<em>/g, '*');
+  input = input.replace(/<\/em>/g, '*');
+
+  input = input.replace(/<code>/g, '`');
+  input = input.replace(/<\/code>/g, '`');
+
+  input = input.replace(/&lt;/g, '<');
+  input = input.replace(/&gt;/g, '>');
 
   if (input.substr(input.length - 1) !== '\n') {
     input += '\n';
