@@ -37,4 +37,30 @@ describe('mdParserReverse', function () {
     fs.unlink('tests_reverse/two_paragraphs_expected.md');
     fs.unlink('tests_reverse/two_paragraphs.md');
   });
+
+  it("should parse a chunk starting with <h1>, <h2>...as a #, ##...chunk", function () {
+    fs.writeFileSync('tests_reverse/hashtags.html',
+                     '<h1>Chunk starting with one hashtag.</h1>\n' +
+                     '<h3>Chunk starting with three hashtags.</h3>\n' +
+                     '<h5>Chunk starting with five hashtags.</h5>\n');
+    fs.writeFileSync('tests_reverse/hashtags_expected.md',
+                     '# Chunk starting with one hashtag.\n' +
+                     '### Chunk starting with three hashtags.\n' +
+                     '##### Chunk starting with five hashtags.\n');
+    mdParserReverse('tests_reverse/hashtags.html', 'tests_reverse/hashtags.md');
+    var actual = fs.readFileSync('tests_reverse/hashtags.md', 'utf8'),
+        expected = fs.readFileSync('tests_reverse/hashtags_expected.md', 'utf8');
+    expect(actual).toEqual(expected);
+
+    fs.unlink('tests_reverse/hashtags.html');
+    fs.unlink('tests_reverse/hashtags_expected.md');
+    fs.unlink('tests_reverse/hashtags.md');
+  });
+
+  //   it("should parse a chunk starting with #, ##... as a <h1>, <h2>...chunk", function () {
+  //   mdParser('tests/hashtags.md', 'tests/hashtags.html');
+  //   var actual = fs.readFileSync('tests/hashtags.html', 'utf8'),
+  //       expected = fs.readFileSync('tests/hashtags_expected.html', 'utf8');
+  //   expect(actual).toEqual(expected);
+  // });
 });
