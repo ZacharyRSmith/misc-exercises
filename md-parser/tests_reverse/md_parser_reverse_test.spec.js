@@ -129,10 +129,27 @@ describe('mdParserReverse', function () {
     fs.unlink('tests/unordered_list.md');
   });
 
-  // it("should enclose text wrapped in '**' with '<strong>' tags", function () {
-  //   mdParser('tests/strong.md', 'tests/strong.html');
-  //   var actual = fs.readFileSync('tests/strong.html', 'utf8'),
-  //       expected = fs.readFileSync('tests/strong_expected.html', 'utf8');
-  //   expect(actual).toEqual(expected);
-  // });
+  it("should parse an ordered list", function () {
+    fs.writeFileSync('tests/ordered_list.html',
+                     '<p>My favorite cuisines are:</p>\n' +
+                     '<ol>\n' +
+                     '  <li>Sushi</li>\n' +
+                     '  <li>Barbeque</li>\n' +
+                     '  <li>Mexican</li>\n' +
+                     '</ol>\n');
+    fs.writeFileSync('tests/ordered_list_expected.md',
+                     'My favorite cuisines are:\n' +
+                     '\n' +
+                     '1. Sushi\n' +
+                     '2. Barbeque\n' +
+                     '3. Mexican\n');
+    mdParserReverse('tests/ordered_list.html', 'tests/ordered_list.md');
+    var actual = fs.readFileSync('tests/ordered_list.md', 'utf8'),
+        expected = fs.readFileSync('tests/ordered_list_expected.md', 'utf8');
+    expect(actual).toEqual(expected);
+
+    fs.unlink('tests/ordered_list.html');
+    fs.unlink('tests/ordered_list_expected.md');
+    fs.unlink('tests/ordered_list.md');
+  });
 });
