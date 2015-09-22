@@ -7,3 +7,6 @@
   (println "Hello world!"))
 
 (set! *main-cli-fn* -main)
+
+(defn foo [a b]
+  (* a b))

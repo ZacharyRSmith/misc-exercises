@@ -5,14 +5,14 @@ goog.require('cljs.nodejs');
 cljs.nodejs.enable_util_print_BANG_.call(null);
 hello_world.core._main = (function hello_world$core$_main(){
 var args__3303__auto__ = [];
-var len__3300__auto___29 = arguments.length;
-var i__3301__auto___30 = (0);
+var len__3300__auto___53 = arguments.length;
+var i__3301__auto___54 = (0);
 while(true){
-if((i__3301__auto___30 < len__3300__auto___29)){
-args__3303__auto__.push((arguments[i__3301__auto___30]));
+if((i__3301__auto___54 < len__3300__auto___53)){
+args__3303__auto__.push((arguments[i__3301__auto___54]));
 
-var G__31 = (i__3301__auto___30 + (1));
-i__3301__auto___30 = G__31;
+var G__55 = (i__3301__auto___54 + (1));
+i__3301__auto___54 = G__55;
 continue;
 } else {
 }
@@ -29,9 +29,12 @@ return cljs.core.println.call(null,"Hello world!");
 
 hello_world.core._main.cljs$lang$maxFixedArity = (0);
 
-hello_world.core._main.cljs$lang$applyTo = (function (seq28){
-return hello_world.core._main.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq28));
+hello_world.core._main.cljs$lang$applyTo = (function (seq52){
+return hello_world.core._main.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq.call(null,seq52));
 });
 cljs.core._STAR_main_cli_fn_STAR_ = hello_world.core._main;
+hello_world.core.foo = (function hello_world$core$foo(a,b){
+return (a * b);
+});
 
 //# sourceMappingURL=core.js.map
