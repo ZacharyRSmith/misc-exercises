@@ -25,8 +25,14 @@ function mdParserReverse (inputFilename, outputFilename) {
   input = input.replace(/<em>/g, '*');
   input = input.replace(/<\/em>/g, '*');
 
+  input = input.replace(/  <li>/g, '* ');
+  input = input.replace(/<\/li>/g, '');
+
   input = input.replace(/<strong>/g, '**');
   input = input.replace(/<\/strong>/g, '**');
+
+  input = input.replace(/<ul>\n/g, '');
+  input = input.replace(/<\/ul>/g, '');
 
   input = input.replace(/<code>/g, '`');
   input = input.replace(/<\/code>/g, '`');

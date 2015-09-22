@@ -105,6 +105,30 @@ describe('mdParserReverse', function () {
     fs.unlink('tests_reverse/strong.md');
   });
 
+  it("should parse an unordered list", function () {
+    fs.writeFileSync('tests/unordered_list.html',
+                     '<p>My favorite cuisines are:</p>\n' +
+                     '<ul>\n' +
+                     '  <li>Sushi</li>\n' +
+                     '  <li>Barbeque</li>\n' +
+                     '  <li>Mexican</li>\n' +
+                     '</ul>\n');
+    fs.writeFileSync('tests/unordered_list_expected.md',
+                     'My favorite cuisines are:\n' +
+                     '\n' +
+                     '* Sushi\n' +
+                     '* Barbeque\n' +
+                     '* Mexican\n');
+    mdParserReverse('tests/unordered_list.html', 'tests/unordered_list.md');
+    var actual = fs.readFileSync('tests/unordered_list.md', 'utf8'),
+        expected = fs.readFileSync('tests/unordered_list_expected.md', 'utf8');
+    expect(actual).toEqual(expected);
+
+    fs.unlink('tests/unordered_list.html');
+    fs.unlink('tests/unordered_list_expected.md');
+    fs.unlink('tests/unordered_list.md');
+  });
+
   // it("should enclose text wrapped in '**' with '<strong>' tags", function () {
   //   mdParser('tests/strong.md', 'tests/strong.html');
   //   var actual = fs.readFileSync('tests/strong.html', 'utf8'),
