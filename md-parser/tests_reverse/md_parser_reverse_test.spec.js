@@ -82,17 +82,33 @@ describe('mdParserReverse', function () {
     fs.unlink('tests_reverse/em.md');
   });
 
-  // it("should parse '*' as '<em>' tags", function () {
-  //   mdParser('tests/em.md', 'tests/em.html');
-  //   var actual = fs.readFileSync('tests/em.html', 'utf8'),
-  //       expected = fs.readFileSync('tests/em_expected.html', 'utf8');
-  //   expect(actual).toEqual(expected);
-  // });
+  it("should parse 'strong' tags as '**'", function () {
+    fs.writeFileSync('tests_reverse/strong.html',
+       '<h1><strong>This header should be enclosed in a <code>&lt;strong&gt;</code> tag.</strong></h1>\n' +
+       '<p>This paragraph should have the following text enclosed in a <code>&lt;strong&gt;</code> tag:\n' +
+       '<strong>I am the enclosed text, yay!</strong></p>\n' +
+       '<p>And <strong>this is a chunk</strong> with two <code>&lt;strong&gt;</code> tags! <strong>: D</strong></p>\n');
+    fs.writeFileSync('tests_reverse/strong_expected.md',
+       '# **This header should be enclosed in a `<strong>` tag.**\n' +
+       '\n' +
+       'This paragraph should have the following text enclosed in a `<strong>` tag:\n' +
+       '**I am the enclosed text, yay!**\n' +
+       '\n' +
+       'And **this is a chunk** with two `<strong>` tags! **: D**\n');
+    mdParserReverse('tests_reverse/strong.html', 'tests_reverse/strong.md');
+    var actual = fs.readFileSync('tests_reverse/strong.md', 'utf8'),
+        expected = fs.readFileSync('tests_reverse/strong_expected.md', 'utf8');
+    expect(actual).toEqual(expected);
 
-  //   it("should parse a chunk starting with #, ##... as a <h1>, <h2>...chunk", function () {
-  //   mdParser('tests/hashtags.md', 'tests/hashtags.html');
-  //   var actual = fs.readFileSync('tests/hashtags.html', 'utf8'),
-  //       expected = fs.readFileSync('tests/hashtags_expected.html', 'utf8');
+    fs.unlink('tests_reverse/strong.html');
+    fs.unlink('tests_reverse/strong_expected.md');
+    fs.unlink('tests_reverse/strong.md');
+  });
+
+  // it("should enclose text wrapped in '**' with '<strong>' tags", function () {
+  //   mdParser('tests/strong.md', 'tests/strong.html');
+  //   var actual = fs.readFileSync('tests/strong.html', 'utf8'),
+  //       expected = fs.readFileSync('tests/strong_expected.html', 'utf8');
   //   expect(actual).toEqual(expected);
   // });
 });
